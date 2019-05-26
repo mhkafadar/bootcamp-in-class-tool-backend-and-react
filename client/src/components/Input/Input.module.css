@@ -1,0 +1,25 @@
+.Input {
+    padding: 15px;
+    box-sizing: border-box;
+    border: 2px solid rgb(153, 75, 255);
+    border-radius: 3px;
+    width: 30vmax;
+    margin: auto;
+    text-align: center;
+    color: black;
+    font-size: 0.6em;
+}
+
+.Input::placeholder {
+    color: black;
+}
+
+.Input[type=text] {
+    color: black;
+}
+
+.Input:focus {
+    outline: none;
+    background-color: lightblue;
+    border: 3px solid rgb(77, 255, 122);
+}

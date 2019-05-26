@@ -1,0 +1,33 @@
+.Vote {
+    display: flex;
+    justify-content: space-around;
+}
+
+.Rectangle {
+    margin: 20px 20px;
+    box-sizing: border-box;
+    width: 40vmin;
+    height: 40vmax;
+    border-radius: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Green {
+    background-color: rgb(41, 212, 41);
+    -webkit-box-shadow: 5px 7px 55px -1px rgba(67, 235, 0, 0.45);
+    -moz-box-shadow: 5px 7px 55px -1px rgba(67, 235, 0, 0.45);
+    box-shadow: 5px 7px 55px -1px rgba(67, 235, 0, 0.45);
+}
+
+.Red {
+    background-color: red;
+    -webkit-box-shadow: 5px 7px 55px -1px rgba(235, 0, 0, 0.45);
+    -moz-box-shadow: 5px 7px 55px -1px rgba(235, 0, 0, 0.45);
+    box-shadow: 5px 7px 55px -1px rgba(235, 0, 0, 0.45);
+}
+
+.Text {
+    align-content: center;
+}
