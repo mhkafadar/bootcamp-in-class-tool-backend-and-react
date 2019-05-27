@@ -67,7 +67,7 @@ app.post('/login', (req, res) => {
         bcrypt.compare(password, user.password, function (err, result) {
             if (result === true) {
                 console.log("Valid login.");
-                const token = jwt.sign({ email: user.email, firstName: user.firstName, lastName: user.lastName }, process.env.SECRET_KEY, { expiresIn: 129600});
+                const token = jwt.sign({ id: user.id, email: user.email, firstName: user.firstName, lastName: user.lastName }, process.env.SECRET_KEY, { expiresIn: 129600});
                 res.json({
                     success: true,
                     err: null,
@@ -88,6 +88,13 @@ app.post('/login', (req, res) => {
 app.get('/home', (req, res) => {
     console.log("JWT checked");
     res.send('You are authenticated');
+});
+
+app.post('/admin', jwtMW, (req, res) => {
+    const jwtWithOutBearer = req.headers.authorization.slice(7);
+    const decoded = jwt.verify(jwtWithOutBearer, process.env.SECRET_KEY);
+    const userId = decoded.id;
+    db.User.findByPk(userId).then(user => res.send(user));
 });
 
 db.sequelize.sync().then(() => {

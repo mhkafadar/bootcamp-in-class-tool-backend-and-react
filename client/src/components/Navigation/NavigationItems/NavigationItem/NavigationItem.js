@@ -7,6 +7,7 @@ const NavigationItem = (props) => {
     return (
         <li className={styles.NavigationItem + ' ' +  (props.isActive ? styles.ActiveLink : '')}>
             <NavLink 
+                onClick={props.click}
                 to={props.link}
                 exact={props.exact} >
                     {props.children}

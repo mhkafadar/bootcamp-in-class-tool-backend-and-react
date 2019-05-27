@@ -2,11 +2,15 @@ import React, { Component } from 'react';
 
 class AdminPage extends Component {
     render () {
-        return (
-            <div>
-                Every body can see that.
-            </div>
-        );
+        if (this.props.isAdmin) {
+            return (
+                <div>
+                    Only you! Yes {this.props.user.firstName} only you can see that!
+                </div> 
+            );
+        } 
+        return null;
+         
     }
 }
 

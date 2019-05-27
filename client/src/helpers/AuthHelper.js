@@ -8,6 +8,7 @@ export default class AuthHelper {
             password
         })
         .then(res => {
+            localStorage.removeItem('id_token');
             this.setToken(res.data.token);
             return Promise.resolve(res);
         });
