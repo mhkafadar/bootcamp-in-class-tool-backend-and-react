@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { withRouter } from 'react-router';
+import socketIOClient from "socket.io-client";
 
 import AdminPage from './containers/AdminPage/AdminPage';
 import HomePage from './components/HomePage/HomePage';
@@ -26,6 +27,9 @@ class App extends Component {
   
   componentDidMount() {
     console.log('app js did mount');
+    const endpoint = "http://localhost:5000";
+    const socket = socketIOClient(endpoint);
+    socket.on("otgoin data", data => console.log("response data is", data));
   }
 
   componentDidCatch() {
@@ -101,14 +105,14 @@ class App extends Component {
       })
   }
 
-  logoutHandler = async () => {
-      await this.Auth.logout();
-      await this.setState({
+  logoutHandler = () => {
+      this.setState({
         anonymous: true,
         isAdmin: false,
         user: null,
         message: null
       });
+      this.Auth.logout();      
       this.props.history.replace('/login');
   }
 

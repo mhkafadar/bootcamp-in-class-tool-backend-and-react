@@ -10,6 +10,9 @@ require('dotenv').config();
 
 const port = process.env.PORT || 5000;
 const app = express();
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
+
 
 const db = require("./models");
 
@@ -27,7 +30,7 @@ const jwtMW = exjwt({
     secret: process.env.SECRET_KEY
 })
 
-app.get('/express-backend', jwtMW, (req, res) => {
+app.get('/express-backend', (req, res) => {
     console.log(req.headers);
     res.send({ message: 'You connected to express' });
 });
@@ -37,7 +40,7 @@ app.post('/get-user', jwtMW, (req, res) => {
     const email = req.body.email;
     console.log(email);
     res.send(email);
-})
+});
 
 app.post('/register', (req, res) => {
     const { email, firstName, lastName, password } = req.body;
@@ -102,8 +105,12 @@ app.post('/admin', jwtMW, (req, res) => {
     db.User.findByPk(userId).then(user => res.send(user));
 });
 
+io.on('connection', function(socket){
+    console.log('a user connected');
+})
+
 db.sequelize.sync().then(() => {
-    app.listen(port, () => {
+    http.listen(port, () => {
         console.log("DB synced, app listening on port ", port);
     });
 });

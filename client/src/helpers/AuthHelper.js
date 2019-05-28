@@ -2,14 +2,13 @@ import decode from 'jwt-decode';
 import axios from '../axios';
 
 export default class AuthHelper {
-    login = (email, password) => {
+    login = async (email, password) => {
         return axios.post("/login", {
             email,
             password
         })
-        .then(res => {
-            localStorage.removeItem('id_token');
-            this.setToken(res.data.token);
+        .then( async (res) => {
+            await this.setToken(res.data.token);
             return Promise.resolve(res);
         });
     }
