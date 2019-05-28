@@ -28,6 +28,7 @@ const jwtMW = exjwt({
 })
 
 app.get('/express-backend', jwtMW, (req, res) => {
+    console.log(req.headers);
     res.send({ message: 'You connected to express' });
 });
 
@@ -60,7 +61,7 @@ app.post('/login', (req, res) => {
     db.User.findOne({
         where: { email: email }
     }).then(user => {
-        console.log("user found");
+        console.log("user found", user.email);
         if (user === null) {
             res.json(false);
         }
@@ -68,10 +69,12 @@ app.post('/login', (req, res) => {
             if (result === true) {
                 console.log("Valid login.");
                 const token = jwt.sign({ id: user.id, email: user.email, firstName: user.firstName, lastName: user.lastName }, process.env.SECRET_KEY, { expiresIn: 129600});
+                console.log('user is admin? ', user.email, user.isAdmin);
                 res.json({
                     success: true,
                     err: null,
-                    token
+                    token,
+                    user
                 });
             } else {
                 console.log("wrong log in");
@@ -91,7 +94,9 @@ app.get('/home', (req, res) => {
 });
 
 app.post('/admin', jwtMW, (req, res) => {
-    const jwtWithOutBearer = req.headers.authorization.slice(7);
+    console.log('request to admin path');
+    console.log(req.headers);
+    const jwtWithOutBearer = req.headers.authorization.split(' ')[1];
     const decoded = jwt.verify(jwtWithOutBearer, process.env.SECRET_KEY);
     const userId = decoded.id;
     db.User.findByPk(userId).then(user => res.send(user));

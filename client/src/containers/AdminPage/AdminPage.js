@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 
 class AdminPage extends Component {
     render () {
-        if (this.props.isAdmin) {
+        console.log('rendering admin page');
+        if (this.props.user.isAdmin) {
             return (
                 <div>
                     Only you! Yes {this.props.user.firstName} only you can see that!
